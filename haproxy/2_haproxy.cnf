@@ -1,0 +1,51 @@
+# This configuration is meant to be installed in front of an existing web
+# server that needs some DoS protection. We assume that the web server has been
+# moved to port 8080 on the loopback, and that haproxy 1.3.18 is running on
+# port 80. Note that Apache will have to be configured to get the client's IP
+# address from the X-Forwarded-For header (mod_rpaf can do that).
+
+# This configuration prevents "slowloris" and "nkiller2" from degrading the
+# service. See below for more options.
+
+global
+	daemon
+	maxconn 20000        # count about 1 GB per 20000 connections
+	pidfile /run/haproxy.pid
+        stats socket /var/run/haproxy.stat mode 600
+
+defaults
+	mode http
+	maxconn 19500        # Should be slightly smaller than global.maxconn.
+	timeout client 60s   # Client and server timeout must match the longest
+	timeout server 60s   # time we may wait for a response from the server.
+	timeout queue  60s   # Don't queue requests too long if saturated.
+	timeout connect 4s   # There's no reason to change this one.
+	timeout http-request 5s	# A complete request may never take that long.
+	# Uncomment the following one to protect against nkiller2. But warning!
+	# some slow clients might sometimes receive truncated data if last
+	# segment is lost and never retransmitted :
+	# option nolinger
+	option httpclose
+	option abortonclose
+	balance roundrobin
+	option forwardfor    # set the client's IP in X-Forwarded-For.
+	retries 2
+
+frontend public
+	bind :80             # or any other IP:port combination we listen to.
+	default_backend apache
+
+backend apache
+	# set the maxconn parameter below to match Apache's MaxClients minus
+	# one or two connections so that you can still directly connect to it.
+	server srv 127.0.0.1:7000 maxconn 254 check
+	#server sra 127.0.0.2:8000 maxconn 254 check
+	server srb 127.0.0.3:9000 maxconn 254 check
+
+# Enable the stats page on a dedicated port (8888). Monitoring request errors
+# on the frontend will tell us how many potential attacks were blocked.
+listen stats
+        # Uncomment "disabeled" below to disable the stats page :
+	# disabled
+	bind       :8888
+	stats uri /
