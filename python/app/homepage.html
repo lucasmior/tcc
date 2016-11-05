@@ -1,0 +1,212 @@
+<html>
+	<head>
+		<title>SSS</title>
+		<link href="../static/css/style.css" rel="stylesheet" type="text/css"></link>
+		<script src="../static/script/jquery-2.1.4.min.js"></script>
+		<script src="../static/script/script.js"></script>
+	</head>
+	<body class="noselect">
+		
+		<div id="wrapper">
+			<div id="header"></div>
+			<div class="content">
+			
+				<div class="field">
+					<select name="selector" class="selector">
+						<option value="balvenie12">Balvenie 12</option>
+						<option value="balvenie25">Balvenie 25</option>
+						<option value="oban12">Oban 12</option>
+						<option value="oban24">Oban 24</option>
+						<option value="orion">Orion</option>
+						<option value="reveille">Reveille</option>
+					</select>
+				</div>
+				
+				<h2 class="title_f">Balvenie 12 Front</h2>
+				<div class="field">
+					<div name="front" class="balvenie12_f front active">
+						<div class="UID bt b_f_uid" title="UID" linkedTo="b_r_uid"></div>
+						<div class="bt main_health front_main_health state1" state="state1|state2" linkedState="rear_main_health"></div>
+						<!-- buttons -->
+					</div>
+					<div name="front" class="balvenie25_f front">
+						<div class="UID bt b_f_uid" title="UID" linkedTo="b_r_uid"></div>
+						<div class="bt main_health front_main_health state1" state="state1|state2" linkedState="rear_main_health"></div>
+						<!-- buttons -->
+					</div>
+					<div name="front" class="oban12_f front">
+						<div class="UID bt b_f_uid" title="UID" linkedTo="b_r_uid"></div>
+						<div class="bt main_health front_main_health state1" state="state1|state2" linkedState="rear_main_health"></div>
+						<!-- buttons -->
+					</div>
+					<div name="front" class="oban24_f front">
+						<div class="UID bt b_f_uid" title="UID" linkedTo="b_r_uid"></div>
+						<div class="bt main_health front_main_health state1" state="state1|state2" linkedState="rear_main_health"></div>
+						<!-- buttons -->
+					</div>
+					<div name="front" class="orion_f front">
+						<!-- buttons -->
+					</div>
+					<div name="front" class="reveille_f front">
+						<!-- buttons -->
+					</div>
+				</div>
+				
+				<h2 class="title_r">Balvenie 12 Rear</h2>
+				<div class="field">
+					<div class="balvenie12_r rear active">
+						<div class="fan b_r_f1d12 bOn">No Fan</div>
+						<div class="fan b_r_f2d12 bOn">No Fan</div>
+						<div class="fanbt bt bt_r_f1" linkedTo="b_r_f1d12" title="Fan 1"></div>
+						<div class="fanbt bt bt_r_f2" linkedTo="b_r_f2d12" title="Fan 2"></div>
+						<div class="power bt b_r_p1 bOn" title="Power 1" linkedTo="b_r_pled1_12">OFF</div>
+						<div class="power bt b_r_p2 bOn" title="Power 2" linkedTo="b_r_pled2_12">OFF</div>
+						<div class="UID bt b_r_uid" title="UID" linkedTo="b_f_uid"></div>
+						<div class="UID_fan bt b_r_uid_fan1" title="UID"></div>
+						<div class="UID_fan bt b_r_uid_fan2" title="UID"></div>
+						<div class="UID_r_square bt b_r_uid_square_1" title="UID"></div>
+						<div class="UID_r_square bt b_r_uid_square_2" title="UID"></div>
+						<div class="led b_r_pled1_12 bOn"></div>
+						<div class="led b_r_pled2_12 bOn"></div>
+						<div class="bt fan_led fan_led1 state1" state="state1|state2"></div>
+						<div class="bt fan_led fan_led2 state1" state="state1|state2"></div>
+						<div class="bt main_health rear_main_health state1" state="state1|state2" linkedState="front_main_health"></div>
+						<div class="bt io_led io_health_led1 state1" state="state1|state0" linkedState="io_error_led1"></div>
+						<div class="bt io_led io_error_led1 state0" state="state0|state2" linkedState="io_health_led1"></div>
+						<div class="bt io_led io_health_led2 state1" state="state1|state0" linkedState="io_error_led2"></div>
+						<div class="bt io_led io_error_led2 state0" state="state0|state2" linkedState="io_health_led2"></div>
+						<!--div class="bt port_g12 port_hg12_1 state1" state="state1|state0" linkedState="port_eg12_1"></div>
+						<div class="bt port_g12 port_eg12_1 state0" state="state0|state2" linkedState="port_hg12_1"></div>
+						<div class="bt port_g12 port_hg12_2 state1" state="state1|state0" linkedState="port_eg12_2"></div>
+						<div class="bt port_g12 port_eg12_2 state0" state="state0|state2" linkedState="port_hg12_2"></div>
+						<div class="bt port_g12 port_hg12_3 state1" state="state1|state0" linkedState="port_eg12_3"></div>
+						<div class="bt port_g12 port_eg12_3 state0" state="state0|state2" linkedState="port_hg12_3"></div>
+						<div class="bt port_g12 port_hg12_4 state1" state="state1|state0" linkedState="port_eg12_4"></div>
+						<div class="bt port_g12 port_eg12_4 state0" state="state0|state2" linkedState="port_hg12_4"></div-->
+						<div class="bt dpi dpi11 state1" state="state1|state0" linkedState="dpi12"></div>
+						<div class="bt dpi dpi12 state0" state="state0|state2" linkedState="dpi11"></div>
+						<div class="bt dpi dpi21 state1" state="state1|state0" linkedState="dpi22"></div>
+						<div class="bt dpi dpi22 state0" state="state0|state2" linkedState="dpi21"></div>
+						<div class="bt iomodulebt b_iobutton1" title="I/O Module 1" linkedTo="b_io_d12_1"></div>
+						<div class="bt iomodulebt b_iobutton2" title="I/O Module 2" linkedTo="b_io_d12_2"></div>
+						<div class="iomoduledisp b_io_d12_1 bOn">No IO/Module 1</div>
+						<div class="iomoduledisp b_io_d12_2 bOn">No IO/Module 2</div>
+					</div>
+					
+					<div class="balvenie25_r rear">
+						<div class="fan b_r_f1d25 bOn">No Fan</div>
+						<div class="fan b_r_f2d25 bOn">No Fan</div>
+						<div class="fanbt bt bt_r_f1" linkedTo="b_r_f1d25" title="Fan 1"></div>
+						<div class="fanbt bt bt_r_f2" linkedTo="b_r_f2d25" title="Fan 2"></div>
+						<div class="power bt b_r_p1 bOn" title="Power 1" linkedTo="b_r_pled1_25">OFF</div>
+						<div class="power bt b_r_p2 bOn" title="Power 2" linkedTo="b_r_pled2_25">OFF</div>
+						<div class="UID bt b_r_uid" title="UID" linkedTo="b_f_uid"></div>
+						<div class="UID_fan bt b_r_uid_fan1" title="UID"></div>
+						<div class="UID_fan bt b_r_uid_fan2" title="UID"></div>
+						<div class="UID_r_square bt b_r_uid_square_1" title="UID"></div>
+						<div class="UID_r_square bt b_r_uid_square_2" title="UID"></div>
+						<div class="led b_r_pled1_25 bOn"></div>
+						<div class="led b_r_pled2_25 bOn"></div>
+						<div class="bt fan_led fan_led1 state1" state="state1|state2"></div>
+						<div class="bt fan_led fan_led2 state1" state="state1|state2"></div>
+						<div class="bt main_health rear_main_health state1" state="state1|state2" linkedState="front_main_health"></div>
+						<div class="bt io_led io_health_led1a state1" state="state1|state0" linkedState="io_error_led1a"></div>
+						<div class="bt io_led io_error_led1a state0" state="state0|state2" linkedState="io_health_led1a"></div>
+						<div class="bt io_led io_health_led2a state1" state="state1|state0" linkedState="io_error_led2a"></div>
+						<div class="bt io_led io_error_led2a state0" state="state0|state2" linkedState="io_health_led2a"></div>
+						<div class="bt dpi dpi11a state1" state="state1|state0" linkedState="dpi12a"></div>
+						<div class="bt dpi dpi12a state0" state="state0|state2" linkedState="dpi11a"></div>
+						<div class="bt dpi dpi21a state1" state="state1|state0" linkedState="dpi22a"></div>
+						<div class="bt dpi dpi22a state0" state="state0|state2" linkedState="dpi21a"></div>
+						<div class="bt iomodulebt b_iobutton1" title="I/O Module 1" linkedTo="b_io_d25_1"></div>
+						<div class="bt iomodulebt b_iobutton2" title="I/O Module 2" linkedTo="b_io_d25_2"></div>
+						<div class="iomoduledisp b_io_d25_1 bOn">No IO/Module 1</div>
+						<div class="iomoduledisp b_io_d25_2 bOn">No IO/Module 2</div>
+					</div>
+					
+					<div class="oban12_r rear">
+						<div class="fan o_r_f1d12 bOn">No Fan</div>
+						<div class="fan o_r_f2d12 bOn">No Fan</div>
+						<div class="fanbt bt bt_r_f1" linkedTo="o_r_f1d12" title="Fan 1"></div>
+						<div class="fanbt bt bt_r_f2" linkedTo="o_r_f2d12" title="Fan 2"></div>
+						<div class="power bt b_r_p1 bOn" title="Power 1" linkedTo="o_r_pled1_12">OFF</div>
+						<div class="power bt b_r_p2 bOn" title="Power 2" linkedTo="o_r_pled2_12">OFF</div>
+						<div class="UID bt b_r_uid" title="UID" linkedTo="b_f_uid"></div>
+						<div class="UID_fan bt b_r_uid_fan1" title="UID"></div>
+						<div class="UID_fan bt b_r_uid_fan2" title="UID"></div>
+						<div class="led o_r_pled1_12 bOn"></div>
+						<div class="led o_r_pled2_12 bOn"></div>
+						<div class="bt fan_led fan_led1 state1" state="state1|state2"></div>
+						<div class="bt fan_led fan_led2 state1" state="state1|state2"></div>
+						<div class="bt main_health rear_main_health state1" state="state1|state2" linkedState="front_main_health"></div>
+						<div class="bt dpi dpia1 state1" state="state1|state0" linkedState="dpia2"></div>
+						<div class="bt dpi dpia2 state0" state="state0|state2" linkedState="dpia1"></div>
+						<div class="bt dpi dpia3 state1" state="state1|state0" linkedState="dpia4"></div>
+						<div class="bt dpi dpia4 state0" state="state0|state2" linkedState="dpia3"></div>
+						<div class="bt dpi dpib1 state1" state="state1|state0" linkedState="dpib2"></div>
+						<div class="bt dpi dpib2 state0" state="state0|state2" linkedState="dpib1"></div>
+						<div class="bt dpi dpib3 state1" state="state1|state0" linkedState="dpib4"></div>
+						<div class="bt dpi dpib4 state0" state="state0|state2" linkedState="dpib3"></div>
+						<div class="UID_ioban1 bt"></div>
+						<div class="UID_ioban2 bt"></div>
+						<div class="bt health_ioban1 state1" state="state1|state2"></div>
+						<div class="bt health_ioban2 state1" state="state1|state2"></div>
+						<div class="bt iomodulebt b_iobutton1" title="I/O Module 1" linkedTo="o_io_d12_1"></div>
+						<div class="bt iomodulebt b_iobutton2" title="I/O Module 2" linkedTo="o_io_d12_2"></div>
+						<div class="iomoduledisp o_io_d12_1 bOn">No IO/Module 1</div>
+						<div class="iomoduledisp o_io_d12_2 bOn">No IO/Module 2</div>
+					</div>
+					
+					<div class="oban24_r rear">
+						<div class="fan o_r_f1d24 bOn">No Fan</div>
+						<div class="fan o_r_f2d24 bOn">No Fan</div>
+						<div class="fanbt bt bt_r_f1" linkedTo="o_r_f1d24" title="Fan 1"></div>
+						<div class="fanbt bt bt_r_f2" linkedTo="o_r_f2d24" title="Fan 2"></div>
+						<div class="power bt b_r_p1 bOn" title="Power 1" linkedTo="o_r_pled1_24">OFF</div>
+						<div class="power bt b_r_p2 bOn" title="Power 2" linkedTo="o_r_pled2_24">OFF</div>
+						<div class="UID bt b_r_uid" title="UID" linkedTo="b_f_uid"></div>
+						<div class="UID_fan bt b_r_uid_fan1" title="UID"></div>
+						<div class="UID_fan bt b_r_uid_fan2" title="UID"></div>
+						<div class="led o_r_pled1_24 bOn"></div>
+						<div class="led o_r_pled2_24 bOn"></div>
+						<div class="bt fan_led fan_led1 state1" state="state1|state2"></div>
+						<div class="bt fan_led fan_led2 state1" state="state1|state2"></div>
+						<div class="bt main_health rear_main_health state1" state="state1|state2" linkedState="front_main_health"></div>
+						<div class="bt dpi dpia1a state1" state="state1|state0" linkedState="dpia2a"></div>
+						<div class="bt dpi dpia2a state0" state="state0|state2" linkedState="dpia1a"></div>
+						<div class="bt dpi dpia3a state1" state="state1|state0" linkedState="dpia4a"></div>
+						<div class="bt dpi dpia4a state0" state="state0|state2" linkedState="dpia3a"></div>
+						<div class="bt dpi dpib1a state1" state="state1|state0" linkedState="dpib2a"></div>
+						<div class="bt dpi dpib2a state0" state="state0|state2" linkedState="dpib1a"></div>
+						<div class="bt dpi dpib3a state1" state="state1|state0" linkedState="dpib4a"></div>
+						<div class="bt dpi dpib4a state0" state="state0|state2" linkedState="dpib3a"></div>
+						<div class="UID_ioban1 bt"></div>
+						<div class="UID_ioban2 bt"></div>
+						<div class="bt health_ioban1 state1" state="state1|state2"></div>
+						<div class="bt health_ioban2 state1" state="state1|state2"></div>
+						<div class="bt iomodulebt b_iobutton1" title="I/O Module 1" linkedTo="o_io_d24_1"></div>
+						<div class="bt iomodulebt b_iobutton2" title="I/O Module 2" linkedTo="o_io_d24_2"></div>
+						<div class="iomoduledisp o_io_d24_1 bOn">No IO/Module 1</div>
+						<div class="iomoduledisp o_io_d24_2 bOn">No IO/Module 2</div>
+					</div>
+				</div>
+				
+				<div class="field">
+					<h3 class="margintop">Input</h3>
+					<div class="simulatorCmd">
+						<div class="history"></div>
+						<span>simulator =></span>
+						<input type="text" class="cmd" placeholder="type command here"/>
+					</div>
+					<h3>Output</h3>
+					<div class="simulatorResponse">
+						<div class="history"></div>
+					</div>
+				</div>
+			</div>		
+			<div id="footer">
+				2015 Hewlett-Packard Development Company, L.P.
+			</div>
+		</div>
+	</body>
+</html>
