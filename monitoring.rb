@@ -8,11 +8,11 @@ cpu_usage = 0
 
 # Define the options to initialize the lib docker 
 options = {}
-options['ws_image'] = 'lucasmior/cesar_ws:0.1'
+options['ws_image'] = 'lucasmior/cesar_ws:0.2'
 options['ws_port'] = 8070
 options['lb_image'] = 'million12/haproxy'
 options['lb_config_file'] = '/home/mior/mior-github/tcc/haproxy/conf/haproxy.cfg'
-options['hosts'] = ['192.168.25.20']
+options['hosts'] = ['15.29.219.177']
 
 # Initialize lib docker object
 docker = LibDocker.new(options)
