@@ -109,9 +109,6 @@ class LibDocker
         },
         'HostConfig' => {
           'CpuPeriod' => 25000,
-          'Binds' => [
-            '/home/mior/mior-github/tcc/haproxy/conf/:/etc/haproxy/'
-          ],
           'PortBindings' => {
             '8070/tcp' => [ { 'HostPort' => "#{port}" } ]
           }
