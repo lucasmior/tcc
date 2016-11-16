@@ -2,8 +2,8 @@ require 'docker-api'
 require_relative 'lib/docker'
 
 # Define the thresholds that will be used to scale the system
-threshold = 15
-threshold_min = 8
+threshold = 10
+threshold_min = 5
 cpu_usage = 0
 
 # Define the options to initialize the lib docker 
@@ -12,7 +12,10 @@ options['ws_image'] = 'lucasmior/cesar_ws:0.2'
 options['ws_port'] = 8070
 options['lb_image'] = 'million12/haproxy'
 options['lb_config_file'] = '/home/mior/mior-github/tcc/haproxy/conf/haproxy.cfg'
-options['hosts'] = ['15.29.219.177']
+#options['hosts'] = ['15.29.219.177']
+options['hosts'] = ['192.168.25.11']
+#options['hosts'] = ['15.29.219.177','15.29.219.21']
+options['ws_limit'] = 1
 
 # Initialize lib docker object
 docker = LibDocker.new(options)
@@ -24,7 +27,11 @@ docker.lb_running?
 running = docker.ws_running?
 
 # Create a new one if there is no webserver running
-docker.create_new_container if running < 1
+if running < 1
+  puts 'Creating a new web server'
+  docker.create_new_container 
+  running += 1
+end
 
 # Update the load balancer's configuration file to add the running webservers
 docker.update_lb_servers

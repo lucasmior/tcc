@@ -21,7 +21,7 @@ class LibDocker
     @lb_image = options['lb_image']
     @haproxy_config_file = options['lb_config_file']
     
-    @hosts = options['hosts'] || ['0.0.0.0'] || ['15.29.219.177','15.29.219.21']
+    @hosts = options['hosts'] || ['127.0.0.1']
     
     @docker_port = 4243
   end
@@ -29,21 +29,22 @@ class LibDocker
   ## Method to get the cpu usage from a running webserver
   ##
   def cpu_usage
+    containers = []
     @hosts.each do |host|
       Docker.url = "tcp://#{host}:#{@docker_port}/"
-      containers = Docker::Container.all(all: true, filters: { ancestor: [@ws_image],status:['running'] }.to_json)
-      cpuPercent = 0.0
-
-      status = containers.first.stats
-      
-      cpuDelta = status['cpu_stats']['cpu_usage']['total_usage'] - status['precpu_stats']['cpu_usage']['total_usage']
-      systemDelta = status['cpu_stats']['system_cpu_usage'] - status['precpu_stats']['system_cpu_usage']
-
-      if systemDelta > 0.0 and cpuDelta > 0.0 
-        cpuPercent = (cpuDelta.round(16) / systemDelta.round(16)).round(16) * status['cpu_stats']['cpu_usage']['percpu_usage'].size * 100.0
-      end
-      return cpuPercent.round(2)
+      containers.concat Docker::Container.all(all: true, filters: { ancestor: [@ws_image],status:['running'] }.to_json)
     end
+    
+    cpuPercent = 0.0
+    status = containers.first.stats
+    
+    cpuDelta = status['cpu_stats']['cpu_usage']['total_usage'] - status['precpu_stats']['cpu_usage']['total_usage']
+    systemDelta = status['cpu_stats']['system_cpu_usage'] - status['precpu_stats']['system_cpu_usage']
+
+    if systemDelta > 0.0 and cpuDelta > 0.0 
+      cpuPercent = (cpuDelta.round(16) / systemDelta.round(16)).round(16) * status['cpu_stats']['cpu_usage']['percpu_usage'].size * 100.0
+    end
+    return cpuPercent.round(2)
   end
 
   ## Method to get the id and the server for an image in a pull of servers
@@ -52,7 +53,7 @@ class LibDocker
     hosts.each do |host|
       Docker.url = "tcp://#{host}:#{@docker_port}/"
       containers = Docker::Container.all(all: true, filters: { ancestor: [image],status:['running'] }.to_json)
-      return containers[0] unless containers.nil?
+      return containers.first unless containers.empty?
     end
     fail('Could not found a webserver running')
   end
@@ -61,7 +62,7 @@ class LibDocker
   ##
   def ws_running?(hosts=@hosts)
     total = 0
-
+    puts "looking at: #{@hosts}"
     hosts.each do |host|
       Docker.url = "tcp://#{host}:#{@docker_port}/"
       containers = Docker::Container.all(all: true, filters: { ancestor: [@ws_image], status:['running'] }.to_json)
@@ -75,10 +76,10 @@ class LibDocker
   ##
   def get_available_port(host)
     (7000..7100).each do |port|
-      status = `nmap -p #{port} #{host} | grep #{port} | awk '{print $2}'`.chomp("\n")
+      status = `nmap -Pn -p #{port} #{host} | grep #{port} | awk '{print $2}'`.chomp("\n")
       return port if status.eql? 'closed'
     end
-    fail('Could not found an available port')
+    nil
   end
 
   ## Method to get an available host to instantiate new containers
@@ -87,10 +88,22 @@ class LibDocker
     @hosts.each do |host|
       return host if ws_running?([host]) < @ws_limit
     end
+    puts "No host available! Providing a new one on aws"
+    json = `aws ec2 run-instances --image-id ami-689cc908 --instance-type t2.medium --key-name mior --security-group-id sg-5bb3af3f`
+    json = JSON.parse(json)
+    internal_ip = json["Instances"][0]["NetworkInterfaces"][0]["PrivateIpAddress"]
+    public_ip = nil
+    while public_ip.nil?
+      cmd = "aws ec2 describe-instances --filter \"Name=private-ip-address, Values=#{internal_ip}\""
+      json = JSON.parse(`#{cmd}`)
+      public_ip = json["Reservations"][0]["Instances"][0]["NetworkInterfaces"][0]["Association"]["PublicIp"]
+    end
+    puts "New instance on aws: #{public_ip}"
+    @hosts.push(public_ip)
+    puts 'Waiting the host powers up..'
+    sleep 30
+    public_ip
     # The elegant way should be instantiate a new host to receive more requests
-    puts 'Could not found a host with limit enough to create more containers'
-    puts 'Using localhost to create containers..'
-    return 'localhost'
   end
 
   ## Method to create new containers based on available hosts and ports
@@ -98,7 +111,17 @@ class LibDocker
   def create_new_container
     puts 'Start creating a new container..'
     host = get_available_host
+    if host.nil?
+      puts 'Could not found a host with limit enough to create more containers'
+      return
+    end
+    puts "getting an available port to #{host}"
     port = get_available_port(host)
+    if port.nil?
+      puts 'Could not found an available port'
+      return
+    end
+
     puts "using port #{port} from #{host}"
 
     Docker.url = "tcp://#{host}:#{@docker_port}/"
@@ -122,7 +145,7 @@ class LibDocker
   ##
   def kill_node
     return if ws_running? < 2
-    puts 'Overload, let\'s kill a node..'
+    puts 'Low load, let\'s kill a node..'
     to_kill = get_container_id(image=@ws_image)
     unregister_server(to_kill.id)
     container = Docker::Container.get(to_kill.id, to_kill.connection).kill

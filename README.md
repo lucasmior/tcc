@@ -23,3 +23,4 @@ docker run -p 8070:8070 --cpu-period=250000 --cpu-quota=10000 -v /home/mior/mior
 curl -X POST -d '{"cifra":"abcdefghijk","order":"5" }' 15.29.219.177/cesar
 docker run -d -p 80:80 -p 8888:8888 -v ~/mior-github/tcc/haproxy/conf/:/etc/haproxy/ million12/haproxy -n 10000
 docker run -p 8077:8070 --cpu-period=25000 -d lucasmior/cesar_ws:0.1
+fghijklmnopcurl -X POST -d '{code:abcdefghijk,key:5 }' localhost/cesar
